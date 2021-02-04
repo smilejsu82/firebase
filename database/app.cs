@@ -22,11 +22,14 @@ public class User
 
 public class App : MonoBehaviour
 {
+    private DatabaseReference reference;
+
     // Start is called before the first frame update
     void Start()
     {
-        DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
-        Debug.Log(reference);
+        this.reference = FirebaseDatabase.DefaultInstance.RootReference;
+
+        Debug.Log(this.reference);
 
         string userId = System.Guid.NewGuid().ToString();
         string name = "홍길동";
@@ -39,6 +42,6 @@ public class App : MonoBehaviour
         User user = new User(name, email);
         string json = JsonConvert.SerializeObject(user);
         Debug.Log(json);
-        //mDatabaseRef.Child("users").Child(userId).SetRawJsonValueAsync(json);
+        this.reference.Child("users").Child(userId).SetRawJsonValueAsync(json);
     }
 }
